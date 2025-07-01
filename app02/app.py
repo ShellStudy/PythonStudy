@@ -11,11 +11,21 @@ conn = mariadb.connect(**conn_params)
 
 cur = conn.cursor()
 
-sql = 'SELECT  `no`,  `title`,  `desc`, LEFT(`content`, 256),  `regDate`,  `modDate` FROM `edu`.`NOTICE` LIMIT 1000'
+sql = 'SELECT  * FROM `edu`.`NOTICE` WHERE NO = 1'
 cur.execute(sql)
-result = cur.fetchall()
+result = cur.fetchone()
 
-print(result)
+if result == None:
+    print("데이터가 없습니다.")
+else:
+    행 = ""
+    print('no\ttitle\tdesc\tcontent\tregDate\t\t\tmodDate')
+    for col in result:
+        if col == None:
+            행 += "없다\t"
+        else:
+            행 += f'{col}\t'
+    print(행)
 
 cur.close()
 conn.close()
