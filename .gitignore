@@ -16,3 +16,6 @@ node_modules
 # mariadb
 mariadb
 compose.yml
+
+# python
+*/__pycache__
