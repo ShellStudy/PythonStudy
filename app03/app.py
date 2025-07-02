@@ -46,6 +46,43 @@ def 읽기():
     
     cur.close()
     conn.close()
+    
+def 선택적읽기():
+    conn = 마리아디비()
+    cur = conn.cursor()
+    
+    no = input("NO 컬럼의 값을 입력해주세요.")
+    
+    sql = f'SELECT  * FROM `edu`.`NOTICE` WHERE no = {no}'
+    cur.execute(sql)
+    result = cur.fetchone()
+    
+    if result == None:
+        print("데이터가 없습니다.")
+    else:
+        행 = ""
+        for col in result:
+            if col == None:
+                행 += "\t"
+            else:
+                행 += f'{col} '
+        print(행)
+    
+    cur.close()
+    conn.close()
+
+def 삭제(): 
+    conn = 마리아디비()
+    cur = conn.cursor()
+
+    no = input("NO 컬럼의 값을 입력해주세요.")
+
+    sql = f"DELETE FROM NOTICE WHERE no = {no}"
+    cur.execute(sql)
+    conn.commit()
+
+    cur.close()
+    conn.close()
 
 while True:
     모드 = input("CRUD 중 선택하세요.")
@@ -53,7 +90,13 @@ while True:
     if 모드 == 'C':
         입력()
     elif 모드 == 'R':
-        읽기()
+        타입 = input("전체 또는 선택적으로 가져올까요?")
+        if 타입 == "전체":
+            읽기()
+        elif 타입 == "선택적":
+            선택적읽기()
+    elif 모드 == "D":
+        삭제()
     else:
         break
     print("="*100)
