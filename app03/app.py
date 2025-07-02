@@ -1,20 +1,31 @@
 import mariadb
-conn_params = {
-    "user" : "study",
-    "password" : "study",
-    "host" : "localhost",
-    "database" : "edu",
-    "port" : 3306
-}
-conn = mariadb.connect(**conn_params)
-cur = conn.cursor()
+def 마리아디비():
+    conn_params = {
+        "user" : "study",
+        "password" : "study",
+        "host" : "localhost",
+        "database" : "edu",
+        "port" : 3306
+    }
+    return mariadb.connect(**conn_params)
 
-title = input("제목을 입력하세요.")
-desc = input("설명을 입력하세요.")
+def 입력(): 
+    conn = 마리아디비()
+    cur = conn.cursor()
 
-sql = f"INSERT INTO NOTICE (`title`, `desc`) VALUE ('{title}', '{desc}')"
-cur.execute(sql)
-conn.commit()
+    title = input("제목을 입력하세요.")
+    desc = input("설명을 입력하세요.")
 
-cur.close()
-conn.close()
+    sql = f"INSERT INTO NOTICE (`title`, `desc`) VALUE ('{title}', '{desc}')"
+    cur.execute(sql)
+    conn.commit()
+
+    cur.close()
+    conn.close()
+
+while True:
+    모드 = input("CRUD 중 선택하세요.")
+    if 모드 == 'C':
+        입력()
+    else:
+        break
