@@ -28,7 +28,7 @@ def 읽기():
     conn = 마리아디비()
     cur = conn.cursor()
     
-    sql = 'SELECT  * FROM `edu`.`NOTICE`'
+    sql = 'SELECT  * FROM `edu`.`NOTICE` WHERE delYn = false'
     cur.execute(sql)
     result = cur.fetchall()
     
@@ -53,7 +53,7 @@ def 선택적읽기():
     
     no = input("NO 컬럼의 값을 입력해주세요.")
     
-    sql = f'SELECT  * FROM `edu`.`NOTICE` WHERE no = {no}'
+    sql = f'SELECT  * FROM `edu`.`NOTICE` WHERE delYn = false AND no = {no}'
     cur.execute(sql)
     result = cur.fetchone()
     
@@ -77,7 +77,8 @@ def 삭제():
 
     no = input("NO 컬럼의 값을 입력해주세요.")
 
-    sql = f"DELETE FROM NOTICE WHERE no = {no}"
+    # sql = f"DELETE FROM NOTICE WHERE no = {no}"
+    sql = f"UPDATE NOTICE SET delYn = true WHERE no = {no}"
     cur.execute(sql)
     conn.commit()
 
@@ -95,11 +96,11 @@ def 수정():
     
     txt = ""
     if title != "":
-       txt = f"title='{title}'"
+       txt += f"title='{title}'"
     if desc != "":
         txt += f"`, desc`='{desc}'" if txt != "" else f"`desc`='{desc}'"
     if content != "":
-        txt = f", content = '{content}'" if txt != "" else f"content = '{content}'"
+        txt += f", content = '{content}'" if txt != "" else f"content = '{content}'"
 
     if txt != "":
         sql = f"UPDATE NOTICE SET {txt} WHERE  no = {no}"
