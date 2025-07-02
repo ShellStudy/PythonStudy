@@ -9,7 +9,10 @@ conn_params = {
 conn = mariadb.connect(**conn_params)
 cur = conn.cursor()
 
-sql = "INSERT INTO NOTICE (`title`) VALUE ('추가2 python')"
+title = input("제목을 입력하세요.")
+desc = input("설명을 입력하세요.")
+
+sql = f"INSERT INTO NOTICE (`title`, `desc`) VALUE ('{title}', '{desc}')"
 cur.execute(sql)
 conn.commit()
 
