@@ -98,7 +98,7 @@ def 수정():
     if title != "":
        txt += f"title='{title}'"
     if desc != "":
-        txt += f"`, desc`='{desc}'" if txt != "" else f"`desc`='{desc}'"
+        txt += f", `desc`='{desc}'" if txt != "" else f"`desc`='{desc}'"
     if content != "":
         txt += f", content = '{content}'" if txt != "" else f"content = '{content}'"
 
