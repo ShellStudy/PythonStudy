@@ -84,6 +84,31 @@ def 삭제():
     cur.close()
     conn.close()
 
+def 수정():
+    conn = 마리아디비()
+    cur = conn.cursor()
+
+    no = input("NO 컬럼의 값을 입력해주세요.")
+    title = input("제목을 입력하세요.")
+    desc = input("설명을 입력하세요.")
+    content = input("내용을 입력하세요.")
+    
+    txt = ""
+    if title != "":
+       txt = f"title='{title}'"
+    if desc != "":
+        txt += f"`, desc`='{desc}'" if txt != "" else f"`desc`='{desc}'"
+    if content != "":
+        txt = f", content = '{content}'" if txt != "" else f"content = '{content}'"
+
+    if txt != "":
+        sql = f"UPDATE NOTICE SET {txt} WHERE  no = {no}"
+        cur.execute(sql)
+        conn.commit()
+
+    cur.close()
+    conn.close()
+
 while True:
     모드 = input("CRUD 중 선택하세요.")
     print("="*100)
@@ -95,6 +120,8 @@ while True:
             읽기()
         elif 타입 == "선택적":
             선택적읽기()
+    elif 모드 == "U":
+        수정()
     elif 모드 == "D":
         삭제()
     else:
