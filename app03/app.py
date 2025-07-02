@@ -1,12 +1,13 @@
 import mariadb
+import os
 
 def 마리아디비():
     conn_params = {
-        "user" : "study",
-        "password" : "study",
-        "host" : "localhost",
-        "database" : "edu",
-        "port" : 3306
+        "user" : os.getenv('MARIADB_USER'),
+        "password" : os.getenv('MARIADB_PASSWORD'),
+        "host" : os.getenv('MARIADB_HOST'),
+        "database" : os.getenv('MARIADB_DATABASE'),
+        "port" : int(os.getenv('MARIADB_PORT'))
     }
     return mariadb.connect(**conn_params)
 
