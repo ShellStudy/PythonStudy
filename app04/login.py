@@ -17,7 +17,19 @@ def login():
     
     # 아이디와 비밀번호를 입력 받아 존재 여부 확인 후 존재 한다면 사용자 번호를 리턴해주세요.
     no = 0
-    sql = f""
+    id = input("아이디를 입력하세요.")
+    pwd = input("비밀번호를 입력하세요.")
+    sql = f"SELECT no, pwd FROM USER WHERE id = '{id}'"
+    cur.execute(sql)
+    result1 = cur.fetchone()
+    
+    sql = f"SELECT PASSWORD('{pwd}') as pwd"
+    cur.execute(sql)
+    result2 = cur.fetchone()
+    
+    if result1 != None:
+        if result1[1] == pwd or result1[1] == result2[0]:
+            no = result1[0]
         
     cur.close()
     conn.close()
