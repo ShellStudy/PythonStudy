@@ -23,3 +23,16 @@ def findOne(id):
     else:
         return {}
         
+def login(id, pwd):
+    conn = dbpool.getConn()
+    if conn != None:
+        cur = conn.cursor()
+        sql = f"select * from user where id = '{id}'"
+        cur.execute(sql)
+        result = cur.fetchone()
+        
+        if result != None:
+            if pwd == result[2]:
+                return {"no": result[0], "id": result[1]}
+    else:
+        return {}
