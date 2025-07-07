@@ -19,3 +19,7 @@ def data(d1, d2):
 @controller.get("/db")
 def db():
     return {"users" : users.findAll()}
+
+@controller.get("/id")
+def userId(id):
+    return {"user" : users.findOne(id)}

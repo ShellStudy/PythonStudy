@@ -11,4 +11,15 @@ def findAll():
         return result
     else:
         return []
+    
+def findOne(id):
+    conn = dbpool.getConn()
+    if conn != None:
+        cur = conn.cursor()
+        sql = f"select * from user where id = '{id}'"
+        cur.execute(sql)
+        result = cur.fetchone()
+        return result
+    else:
+        return {}
         
