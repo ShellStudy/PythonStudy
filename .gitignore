@@ -18,6 +18,6 @@ mariadb
 compose.yml
 
 # python
-*/__pycache__
+**/__pycache__
 .env
 .venv
