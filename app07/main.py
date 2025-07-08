@@ -1,7 +1,6 @@
 from fastapi import FastAPI
+from controller import root, movie
 
 app = FastAPI()
-
-@app.get("/")
-def root():
-    return {"test": 1}
+app.include_router(root.ctr)
+app.include_router(movie.ctr)
