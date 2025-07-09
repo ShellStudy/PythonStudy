@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from config import app_config
 from controller import root, movie
 
-app = FastAPI()
+app = FastAPI(title="UV API")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=app_config.origins,
