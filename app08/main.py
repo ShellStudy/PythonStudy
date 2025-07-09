@@ -65,3 +65,12 @@ async def movie(q : str):
         url = f"https://www.omdbapi.com/?apikey={key}&s={q}"
         response = await client.get(url)
         return response.json()
+    
+@app.get("/movie/item")
+async def movie(id : str):
+    async with httpx.AsyncClient() as client:
+        key = os.getenv('API_KEY')
+        url = f"https://www.omdbapi.com/?apikey={key}&i={id}&plot=full"
+        response = await client.get(url)
+        return response.json()
+    
