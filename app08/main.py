@@ -1,5 +1,8 @@
 from fastapi import FastAPI, Form
 from typing import Annotated
+import mariadb
+import os
+import httpx
 
 app = FastAPI()
 
@@ -14,3 +17,51 @@ def test(a : int):
 @app.post("/test")
 def test(a : Annotated[str, Form()]):
     return {"응답": "OK", "A 변수": a}
+
+@app.get("/db")
+def db():
+    conn_params = {
+        "user" : os.getenv('MARIADB_USER'),
+        "password" : os.getenv('MARIADB_PASSWORD'),
+        "host" : os.getenv('MARIADB_HOST'),
+        "database" : os.getenv('MARIADB_DATABASE'),
+        "port" : int(os.getenv('MARIADB_PORT'))
+    }
+    conn = mariadb.connect(**conn_params)
+    cur = conn.cursor()
+    
+    sql = "select * from movies"
+    cur.execute(sql)
+    result = cur.fetchall()
+    
+    cur.close()
+    conn.close()
+    return {"result": result}
+
+@app.get("/year")
+def year(y : str):
+    conn_params = {
+        "user" : os.getenv('MARIADB_USER'),
+        "password" : os.getenv('MARIADB_PASSWORD'),
+        "host" : os.getenv('MARIADB_HOST'),
+        "database" : os.getenv('MARIADB_DATABASE'),
+        "port" : int(os.getenv('MARIADB_PORT'))
+    }
+    conn = mariadb.connect(**conn_params)
+    cur = conn.cursor()
+    
+    sql = f"select * from movies where year < '{y}'"
+    cur.execute(sql)
+    result = cur.fetchall()
+    
+    cur.close()
+    conn.close()
+    return {"result": result}
+
+@app.get("/movie")
+async def movie(q : str):
+    async with httpx.AsyncClient() as client:
+        key = os.getenv('API_KEY')
+        url = f"https://www.omdbapi.com/?apikey={key}&s={q}"
+        response = await client.get(url)
+        return response.json()
