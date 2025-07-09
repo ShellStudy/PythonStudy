@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 origins = [
     "http://localhost",
+    "http://127.0.0.1",
     "http://localhost:80",
     "http://127.0.0.1:80",
 ]
@@ -75,6 +76,7 @@ def year(y : str):
 
 @app.get("/movie")
 async def movie(q : str):
+    if q == '' : return {"Response" : False}
     async with httpx.AsyncClient() as client:
         key = os.getenv('API_KEY')
         url = f"https://www.omdbapi.com/?apikey={key}&s={q}"
