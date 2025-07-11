@@ -19,6 +19,7 @@ $(function(){
     // 3단계) FastAPI 데이터 응답 이벤트
     const views = (res) => {
         $(".movies-list").empty()
+        res = res[0]
         if(res.Response == "True") {
             for(var data of res.Search) {
             rendering(data)
@@ -33,7 +34,11 @@ $(function(){
         e.preventDefault()
         movie = $("#q").val()
         $("#q").val('')
-        $.post('http://localhost:8000/movie', {'q': movie}).done(views).fail((e) => console.error(e))
+        url1 = 'http://localhost:8000/movie'
+        url2 = 'http://localhost:40000/webhook/movie'
+        $.post(url2, {q : movie }).done(views).fail((e) => console.error(e))
+        // url2 = `http://localhost:40000/webhook/movie?q=${movie}`
+        // $.get(url2).done(views).fail((e) => console.error(e))
     }
     
     // 1단계) 검색 요청 이벤트
