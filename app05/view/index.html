@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script>
+
+        $(function(){
+            function call(e) {
+                e.preventDefault()
+                console.log($("#id").val(), $("#pwd").val())
+
+                $.post( "http://localhost/login", 
+                    {"id": $("#id").val(), "pwd": $("#pwd").val()}
+                )
+                .done(function(d) {
+                    console.log(d)
+                })
+                .fail(function(e) {
+                    console.error(e)
+                })
+                .always(function(d) {
+                    console.log(d)
+                })
+
+            }
+            $("form").on("submit", call)
+        })
+
+    </script>
+
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center">로그인</h1>
+        <form>
+            <div class="mb-3">
+                <input type="text" class="form-control" placeholder="아이디를 입력하세요." name="id" id="id" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" class="form-control" placeholder="비밀번호를 입력하세요." name="pwd" id="pwd" required>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-block">로그인</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
