@@ -20,3 +20,4 @@ compose.yml
 # python
 */__pycache__
 .env
+.venv
